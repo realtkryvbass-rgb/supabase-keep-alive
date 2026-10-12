@@ -12,7 +12,7 @@ export default async () => {
     },
     {
       name: "Abonus",
-      url: "https://poiyfpvfdvxdttzrfpjj.supabase.co/rest/v1/income_sources?select=id&limit=1",
+      url: "https://poiyfpvfdvxdttzrfpjj.supabase.co/rest/v1/entries?select=id&limit=1",
       key: process.env.SUPABASE_KEY_3
     },
     {
