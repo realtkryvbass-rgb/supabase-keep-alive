@@ -26,13 +26,19 @@ export default async () => {
 
   for (const project of projects) {
     try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+
       const response = await fetch(project.url, {
         method: "GET",
         headers: {
           "apikey": project.key,
           "Authorization": `Bearer ${project.key}`
-        }
+        },
+        signal: controller.signal
       });
+
+      clearTimeout(timeout);
 
       results.push({
         name: project.name,
@@ -44,9 +50,9 @@ export default async () => {
     } catch (error) {
       results.push({
         name: project.name,
-        error: error.message
+        error: error.name === "AbortError" ? "Timeout 8s" : error.message
       });
-      console.error(`${project.name}:`, error.message);
+      console.error(`${project.name}:`, error.name === "AbortError" ? "Timeout 8s" : error.message);
     }
   }
 
@@ -56,5 +62,5 @@ export default async () => {
 };
 
 export const config = {
-  schedule: "0 4 * * 1,4"
+  schedule: "0 18 */2 * *"   // кожні 2 дні о 21:00 за Києвом
 };
