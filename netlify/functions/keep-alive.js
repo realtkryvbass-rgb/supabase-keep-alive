@@ -19,6 +19,21 @@ export default async () => {
       name: "Доходи",
       url: "https://xzecdwhhrxuemanqvolh.supabase.co/rest/v1/income_sources?select=id&limit=1",
       key: process.env.SUPABASE_KEY_4
+    },
+    {
+      name: "aTime",
+      url: "https://wzwlfebhezizvehdhycm.supabase.co/auth/v1/health",
+      key: process.env.SUPABASE_KEY_5
+    },
+    {
+      name: "eBoard",
+      url: "https://fqpxotzdufjbxpwcgyft.supabase.co/rest/v1/boards?select=id&limit=1",
+      key: process.env.SUPABASE_KEY_6
+    },
+    {
+      name: "PaTestO",
+      url: "https://ukkqervmxdzdxorsoylp.supabase.co/rest/v1/tests?select=id&limit=1",
+      key: process.env.SUPABASE_KEY_7
     }
   ];
 
