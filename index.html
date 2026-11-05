@@ -208,8 +208,20 @@
       resultsEl.innerHTML = '';
 
       try {
-        const res = await fetch('/.netlify/functions/keep-alive');
-        const data = await res.json();
+        const res = await fetch('/.netlify/functions/keep-alive-manual');
+        const text = await res.text();
+        if (!text.trim()) {
+          throw new Error(`Функція повернула порожню відповідь (HTTP ${res.status}). Ймовірно, таймаут або збій функції — перевірте Netlify → Functions → keep-alive-manual → Logs.`);
+        }
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          throw new Error(`Відповідь не є JSON (HTTP ${res.status}): ${text.slice(0, 120)}`);
+        }
+        if (!res.ok && !data.results) {
+          throw new Error(`HTTP ${res.status}: ${data.error || data.message || text.slice(0, 120)}`);
+        }
 
         if (!data.results) {
           throw new Error('Невірний формат відповіді');
